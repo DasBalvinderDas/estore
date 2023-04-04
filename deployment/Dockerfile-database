@@ -1,0 +1,15 @@
+FROM mysql:8.0
+
+ENV MYSQL_ROOT_PASSWORD=rootroot
+ENV MYSQL_DATABASE=jsppos
+
+# Delete any existing data directory
+RUN rm -rf /var/lib/mysql/*
+
+# Copy the schema.sql file to the container
+COPY deployment/schema.sql /docker-entrypoint-initdb.d/
+
+# Add a volume to persist data
+VOLUME /var/lib/mysql
+
+EXPOSE 3306

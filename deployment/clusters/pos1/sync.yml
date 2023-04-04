@@ -1,0 +1,11 @@
+apiVersion: configsync.gke.io/v1alpha1
+kind: Sync
+metadata:
+  name: pos1
+spec:
+  sourceFormat: directory
+  syncRepo: https://github.com/DasBalvinderDas/edge-pos
+  syncBranch: main
+  syncRev: HEAD
+  syncDir: deployment
+  clusterName: pos1

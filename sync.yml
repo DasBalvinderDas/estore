@@ -1,0 +1,20 @@
+apiVersion: configmanagement.gke.io/v1
+kind: ConfigManagement
+metadata:
+  name: pos1-config-management
+spec:
+  clusterName: pos1
+  git:
+    syncRepo: https://github.com/DasBalvinderDas/edge-pos
+    syncRev: latest
+
+---
+apiVersion: configmanagement.gke.io/v1
+kind: ConfigManagement
+metadata:
+  name: pos2-config-management
+spec:
+  clusterName: pos2
+  git:
+    syncRepo: https://github.com/DasBalvinderDas/edge-pos
+    syncRev: latest

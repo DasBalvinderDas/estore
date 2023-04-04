@@ -1,0 +1,31 @@
+# Use an official Tomcat runtime as a parent image
+FROM tomcat:8-jre8-alpine
+
+# Set the working directory to /usr/local/tomcat/webapps
+WORKDIR /usr/local/tomcat/webapps
+
+# Clone the git repository
+RUN apk update && apk add git
+RUN git clone https://github.com/DasBalvinderDas/edge-pos app
+
+# Set the working directory to the cloned project directory
+WORKDIR /usr/local/tomcat/webapps/app/
+
+# Install OpenJDK 8
+RUN apk add openjdk8
+
+# Compile the project
+RUN find /usr/local/tomcat/webapps/app/src -name "*.java" > sources.txt \
+    && javac -cp "WEB-INF/lib/*" -d WEB-INF/classes/ @sources.txt
+
+# Create a WAR file
+RUN jar -cvf jsp-projek.war *
+
+# Copy the WAR file to the Tomcat webapps directory
+RUN mv jsp-projek.war /usr/local/tomcat/webapps/
+
+# Expose port 8080 for Tomcat
+EXPOSE 8080
+
+# Start Tomcat when the container launches
+CMD ["catalina.sh", "run"]

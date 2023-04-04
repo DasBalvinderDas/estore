@@ -1,0 +1,49 @@
+steps:
+  # Build Docker image 1
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "gcr.io/[PROJECT_ID]/posimage:latest",
+        "-f",
+        "Dockerfile-pos",
+        ".",
+      ]
+
+  # Build Docker image 2
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "gcr.io/[PROJECT_ID]/databaseimage:latest",
+        "-f",
+        "Dockerfile-database",
+        ".",
+      ]
+
+  # Push Docker images to container registry
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/[PROJECT_ID]/posimage:latest"]
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/[PROJECT_ID]/databaseimage:latest"]
+
+  # Apply Kubernetes deployment file to POS1 cluster
+  - name: "gcr.io/cloud-builders/kubectl"
+    args: ["apply", "-f", "deployment.yml"]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1-a"
+      - "CLOUDSDK_CONTAINER_CLUSTER=POS1"
+      - "CLOUDSDK_CORE_PROJECT=[PROJECT_ID]"
+
+  # Apply Kubernetes deployment file to POS2 cluster
+  - name: "gcr.io/cloud-builders/kubectl"
+    args: ["apply", "-f", "deployment.yml"]
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=europe-west1-b"
+      - "CLOUDSDK_CONTAINER_CLUSTER=POS2"
+      - "CLOUDSDK_CORE_PROJECT=[PROJECT_ID]"
+
+substitutions:
+  _PROJECT_ID: app-mod-gebu-trainees

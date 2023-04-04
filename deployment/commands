@@ -1,0 +1,119 @@
+docker run -p 3306:3306 databaseimage
+docker run -p 8080:8080 posimage
+
+docker build -t databaseimage:latest -f Dockerfile-database .
+docker build -t posimage:latest -f Dockerfile-pos .
+
+
+docker tag databaseimage gcr.io/app-mod-gebu-trainees/databaseimage
+docker push gcr.io/app-mod-gebu-trainees/databaseimage
+
+docker tag posimage gcr.io/app-mod-gebu-trainees/posimage
+docker push gcr.io/app-mod-gebu-trainees/posimage
+
+
+#Remove the existing data directory 
+RUN rm -rf /var/lib/mysql/*
+
+./catalina.sh run
+
+kubectl apply -f deployment.yml
+
+
+------------------------------------------------------
+
+Command1
+--------
+kubectl create configmap my-deployment --from-file=deployment.yml=https://github.com/your-username/your-repo/blob/main/deployment.yml
+
+Command2
+--------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+  labels:
+    environment: production
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      volumes:
+        - name: deployment-config
+          configMap:
+            name: my-deployment
+      containers: []
+
+
+Command1
+---------
+apiVersion: configmanagement.gke.io/v1
+kind: Sync
+metadata:
+  name: my-deployment
+spec:
+  syncRepo: git@github.com:my-org/my-repo.git
+  syncBranch: main
+  syncRev: HEAD
+  syncStrategy: POLICY
+  clusterSelector:
+    matchLabels:
+      environment: production
+  syncRules:
+  - resourceTypes:
+    - deployments
+    namespaces:
+    - default
+  - resourceTypes:
+    - configmaps
+    - secrets
+    namespaces:
+    - default
+
+
+
+Command0
+---------
+syncRules:
+  - syncStrategy: POLICY
+    namespaces:
+    - default
+    resourceTypes:
+    - deployments
+    sourceFormat: yaml
+    syncInterval: 60s
+    syncCommitter:
+      name: "Anthos Config Management"
+      email: "config-management-system@example.com"
+    syncer:
+      git:
+        secretType: ssh
+    sourcePath: "deployments/"
+
+
+
+apiVersion: configmanagement.gke.io/v1
+kind: Sync
+metadata:
+  name: my-deployment
+spec:
+  syncRepo: git@github.com:my-org/my-repo.git
+  syncBranch: main
+  syncRev: HEAD
+  syncStrategy: POLICY
+  clusterSelector:
+    matchLabels:
+      environment: production
+  syncRules:
+  - resourceTypes:
+    - deployments
+    namespaces:
+    - default
+  - resourceTypes:
+    - configmaps
+    - secrets
+    namespaces:
+    - default

@@ -1,0 +1,10 @@
+This is my first test text file.
+
+http://localhost:8080/jsp-projek/login.jsp
+
+
+
+
+INSERT INTO `staffs` (`staff_id`, `staff_name`, `staff_birth_date`, `staff_address`, `staff_contact_num`, `staff_salary`, `staff_position`, `staff_hire_date`, `staff_email`, `staff_password`) VALUES
+(27, 'Vibhor', '2018-06-15', 'Noida', '01129404479', 1500, 'cashier', '2023-01-23', 'vibhor@gmail.com', '0192023a7bbd73250516f069df18b500'),
+(29, 'Shilpa', '2018-06-09', 'Noida', '01129404479', 1500, 'cashier', '2023-01-29', 'shilpa@gmail.com', '0192023a7bbd73250516f069df18b500');
