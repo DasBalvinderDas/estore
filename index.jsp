@@ -87,14 +87,8 @@
 
                 <div class="card-body">
                   <h5>
-                  TODAY'S STATS
+                  MONTHLY'S SALES
                   </h5>
-
-                  Today earnings and items sales <br><br>
-                  Earning: $400 USD<br>
-                  Items Sold: 20 Items<br>
-                  Last Hour Sales: $34 USD<br>
-
 
 					<div id="piechart"></div>
 					
@@ -105,15 +99,21 @@
 					google.charts.load('current', {'packages':['corechart']});
 					google.charts.setOnLoadCallback(drawChart);
 					
+					var janSale = <c:out value="${sessionScope.saleInMonth.jan}" />
+					var febSale = <c:out value="${sessionScope.saleInMonth.feb}" />
+					var marSale = <c:out value="${sessionScope.saleInMonth.mar}" />
+					var aprSale = <c:out value="${sessionScope.saleInMonth.apr}" />
+					var maySale = <c:out value="${sessionScope.saleInMonth.may}" />
+					
 					// Draw the chart and set the chart values
 					function drawChart() {
 					  var data = google.visualization.arrayToDataTable([
-					  ['Task', 'Hours per Day'],
-					  ['Work', 8],
-					  ['Eat', 2],
-					  ['TV', 4],
-					  ['Gym', 2],
-					  ['Sleep', 8]
+					  ['Month', 'Sales'],
+					  ['Jan Sale', janSale],
+					  ['Feb Sale', febSale],
+					  ['Mar Sale', marSale],
+					  ['Apr Sale', aprSale],
+					  ['May Sale', maySale]
 					]);
 					
 					  // Optional; add a title and set the width and height of the chart
@@ -124,16 +124,6 @@
 					  chart.draw(data, options);
 					}
 					</script>
-
-
-
-
-
-
-
-
-
-
 
                 </div>
               </div>
@@ -150,11 +140,6 @@
                   MONTHLY'S SALES
                   </h5>
 
-                  Monthly earnings and items sales<br><br>
-                  Earning: $400 USD<br>
-                  Items Sold: 20 Items<br>
-                  Last Hour Sales: $34 USD<br>
-                  
                   
                   <div id="barchart"></div>
 					
@@ -174,7 +159,7 @@
 					// Draw the chart and set the chart values
 					function drawChart() {
 					  var data = google.visualization.arrayToDataTable([
-					  ['Task', 'Hours per Day'],
+					  ['Month', 'Sales'],
 					  ['Jan Sale', janSale],
 					  ['Feb Sale', febSale],
 					  ['Mar Sale', marSale],
@@ -206,11 +191,6 @@
                   YEARLY'S STATS
                   </h5>
 
-                  All earnings and items sales<br><br>
-                  Earning: $400 USD<br>
-                  Items Sold: 20 Items<br>
-                  Last Hour Sales: $34 USD<br>
-                  
                   <div id="barchart2"></div>
 					
 					<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -220,15 +200,21 @@
 					google.charts.load('current', {'packages':['corechart']});
 					google.charts.setOnLoadCallback(drawChart);
 					
+					var janSale = <c:out value="${sessionScope.saleInMonth.jan}" />
+					var febSale = <c:out value="${sessionScope.saleInMonth.feb}" />
+					var marSale = <c:out value="${sessionScope.saleInMonth.mar}" />
+					var aprSale = <c:out value="${sessionScope.saleInMonth.apr}" />
+					var maySale = <c:out value="${sessionScope.saleInMonth.may}" />
+					
 					// Draw the chart and set the chart values
 					function drawChart() {
 					  var data = google.visualization.arrayToDataTable([
-					  ['Task', 'Hours per Day'],
-					  ['Work', 8],
-					  ['Eat', 2],
-					  ['TV', 4],
-					  ['Gym', 2],
-					  ['Sleep', 8]
+					  ['Month', 'Sales'],
+					  ['Jan Sale', janSale],
+					  ['Feb Sale', febSale],
+					  ['Mar Sale', marSale],
+					  ['Apr Sale', aprSale],
+					  ['May Sale', maySale]
 					]);
 					
 					  // Optional; add a title and set the width and height of the chart
