@@ -9,6 +9,7 @@ public class SalesBean {
 	private int product_sell_price;
 	private int product_amount;
 	public boolean valid;
+	private int store_id;
 	
 	public int getTransaction_id() {
 		return transaction_id;
@@ -51,6 +52,12 @@ public class SalesBean {
 	}
 	public void setValid(boolean valid) {
 		this.valid = valid;
+	}
+	public int getStore_id() {
+		return store_id;
+	}
+	public void setStore_id(int store_id) {
+		this.store_id = store_id;
 	}
 
 }

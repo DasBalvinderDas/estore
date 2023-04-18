@@ -10,7 +10,7 @@
 
   if(session.getAttribute("currentSessionUser")==null)
       response.sendRedirect("/jsp-projek/login.jsp");
-
+      
 %>
 
 <!doctype html>
@@ -28,7 +28,40 @@
   </head>
 
   <body style="background-color: #f2f3f8">
-<jsp:include page="my-header.jsp"/>
+  
+  
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark" style="background-color:#004085!important" >
+     <img src="logo2.png" style="width: 15%;">
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:white"><c:out value="${sessionScope.storeName}" />
+</span>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Logout <span class="sr-only">(current)</span></a>
+          </li>
+<!--           <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown link
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li> -->
+        </ul>
+      </div>
+    </nav>
+  
     
     <div class="container-fluid">
       <div class="row">
@@ -62,6 +95,46 @@
                   Items Sold: 20 Items<br>
                   Last Hour Sales: $34 USD<br>
 
+
+					<div id="piechart"></div>
+					
+					<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+					
+					<script type="text/javascript">
+					// Load google charts
+					google.charts.load('current', {'packages':['corechart']});
+					google.charts.setOnLoadCallback(drawChart);
+					
+					// Draw the chart and set the chart values
+					function drawChart() {
+					  var data = google.visualization.arrayToDataTable([
+					  ['Task', 'Hours per Day'],
+					  ['Work', 8],
+					  ['Eat', 2],
+					  ['TV', 4],
+					  ['Gym', 2],
+					  ['Sleep', 8]
+					]);
+					
+					  // Optional; add a title and set the width and height of the chart
+					  var options = {'title':'My Average Day', 'width':300, 'height':450};
+					
+					  // Display the chart inside the <div> element with id="piechart"
+					  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+					  chart.draw(data, options);
+					}
+					</script>
+
+
+
+
+
+
+
+
+
+
+
                 </div>
               </div>
             </div>
@@ -74,13 +147,49 @@
 
                 <div class="card-body">
                   <h5>
-                  MONTHLY'S STATS
+                  MONTHLY'S SALES
                   </h5>
 
                   Monthly earnings and items sales<br><br>
                   Earning: $400 USD<br>
                   Items Sold: 20 Items<br>
                   Last Hour Sales: $34 USD<br>
+                  
+                  
+                  <div id="barchart"></div>
+					
+					<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+					
+					<script type="text/javascript">
+					// Load google charts
+					google.charts.load('current', {'packages':['corechart']});
+					google.charts.setOnLoadCallback(drawChart);
+					
+					var janSale = <c:out value="${sessionScope.saleInMonth.jan}" />
+					var febSale = <c:out value="${sessionScope.saleInMonth.feb}" />
+					var marSale = <c:out value="${sessionScope.saleInMonth.mar}" />
+					var aprSale = <c:out value="${sessionScope.saleInMonth.apr}" />
+					var maySale = <c:out value="${sessionScope.saleInMonth.may}" />
+					
+					// Draw the chart and set the chart values
+					function drawChart() {
+					  var data = google.visualization.arrayToDataTable([
+					  ['Task', 'Hours per Day'],
+					  ['Jan Sale', janSale],
+					  ['Feb Sale', febSale],
+					  ['Mar Sale', marSale],
+					  ['Apr Sale', aprSale],
+					  ['May Sale', maySale]
+					]);
+					
+					  // Optional; add a title and set the width and height of the chart
+					  var options = {'title':'My Average Day', 'width':300, 'height':450};
+					
+					  // Display the chart inside the <div> element with id="piechart"
+					  var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+					  chart.draw(data, options);
+					}
+					</script>
 
                 </div>
               </div>
@@ -101,6 +210,35 @@
                   Earning: $400 USD<br>
                   Items Sold: 20 Items<br>
                   Last Hour Sales: $34 USD<br>
+                  
+                  <div id="barchart2"></div>
+					
+					<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+					
+					<script type="text/javascript">
+					// Load google charts
+					google.charts.load('current', {'packages':['corechart']});
+					google.charts.setOnLoadCallback(drawChart);
+					
+					// Draw the chart and set the chart values
+					function drawChart() {
+					  var data = google.visualization.arrayToDataTable([
+					  ['Task', 'Hours per Day'],
+					  ['Work', 8],
+					  ['Eat', 2],
+					  ['TV', 4],
+					  ['Gym', 2],
+					  ['Sleep', 8]
+					]);
+					
+					  // Optional; add a title and set the width and height of the chart
+					  var options = {'title':'My Average Day', 'width':300, 'height':450};
+					
+					  // Display the chart inside the <div> element with id="piechart"
+					  var chart = new google.visualization.BarChart(document.getElementById('barchart2'));
+					  chart.draw(data, options);
+					}
+					</script>
 
                 </div>
               </div>

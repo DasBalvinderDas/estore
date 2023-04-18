@@ -33,10 +33,42 @@
     <!-- Sweetalert -->
 
     <title>Hello, world!</title>
+    
   </head>
 
   <body style="background-color: #f2f3f8">
-<jsp:include page="my-header.jsp"/>
+
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark" style="background-color:#004085!important" >
+     <img src="logo2.png" style="width: 15%;">
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:white"><c:out value="${sessionScope.storeName}" />
+</span>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Logout <span class="sr-only">(current)</span></a>
+          </li>
+<!--           <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown link
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li> -->
+        </ul>
+      </div>
+    </nav>
     
     <div class="container-fluid">
       <div class="row">
@@ -51,13 +83,14 @@
 			<%	String transaction_id = (String)session.getAttribute("transactionid");%>
             <div class="card-body">
 			<form name="staff_add_form" method="POST" action="SalesController">
-			<input type="hidden" class="form-control" id="product_id" name="transaction_id" value="<c:out value="<%=transaction_id%>" />">
-              <select class="addproduct" name="product_name">
+			<input type="hidden" class="form-control" id="transaction_id" name="transaction_id" value="<c:out value="<%=transaction_id%>" />">
+			
+              <select class="addproduct" id="product_name" name="product_name">
                    <c:forEach items="${products}" var="product"> 
-                     <option value="<c:out value="${product.product_id}"/>" ><c:out value="${product.product_name}" /></option>
+                     <option value="<c:out value="${product.product_name}|${product.product_id}"/>" ><c:out value="${product.product_name}" /></option>
                      </c:forEach>
               </select>
-
+              
               <select class="addquantity" name="product_quantity">
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -89,8 +122,8 @@
                       <td><c:out value="${sale.transaction_date}" /></td>
                       <td><c:out value="${sale.product_name}" /></td>
                       <td><c:out value="${sale.product_quantity}" /></td>
-                      <td><c:out value="RM${sale.product_sell_price}" /></td>
-                      <td><c:out value="RM${sale.product_amount}" /></td>
+                      <td>$<c:out value="${sale.product_sell_price}" /></td>
+                      <td>$<c:out value="${sale.product_amount}" /></td>
                       <td>
 	                        <button data-sales-id="<c:out value="${sale.transaction_id}" />" class="btn btn-danger btn-sm deletesales">
 	                          <span data-feather="trash"></span>
@@ -193,7 +226,9 @@
     $('.tablerow').each(function (i) {
     	   $("td:first", this).html(i + 1);
     	});
-    </script>
 
+    </script>
+    
+	
   </body>
 </html>

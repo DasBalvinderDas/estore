@@ -2,6 +2,7 @@ package eManage.controller;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import eManage.dao.ProductDAO;
 import eManage.dao.StaffDAO;
+import eManage.model.SaleInMonth;
 import eManage.model.StaffBean;
 
 
@@ -21,6 +24,7 @@ public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static String LOGIN = "/login.jsp";
 	private StaffDAO dao;
+	private ProductDAO productdao;   
 	String forward="";
 	
     /**
@@ -30,6 +34,7 @@ public class LoginController extends HttpServlet {
         super();
         
         dao = new StaffDAO();
+        productdao = new ProductDAO();
         // TODO Auto-generated constructor stub
     }
 
@@ -64,7 +69,10 @@ public class LoginController extends HttpServlet {
 			            response);
 			 }
 			 else {
+			populateMonthlySales(session);
 			response.sendRedirect("/jsp-projek/index.jsp");
+				 //request.getRequestDispatcher("/jsp-projek/index.jsp").forward(request,
+				            //response);
 			 }
 			// logged-in page
 		}
@@ -78,6 +86,34 @@ public class LoginController extends HttpServlet {
 		
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
+	
+	public void populateMonthlySales(HttpSession session)  {
+		try {      
+			
+			SaleInMonth saleInMonth = null;
+			String storeName = "";
+			try {
+				saleInMonth = productdao.getMonthlySales();
+				storeName = productdao.getStoreName();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			System.out.println("storeName" + storeName);
+			
+			session.setAttribute("saleInMonth", saleInMonth);
+			session.setAttribute("storeName", storeName);
+			
+			System.out.println("session value" + session.getAttribute("storeName"));
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+	}
+}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -87,4 +123,4 @@ public class LoginController extends HttpServlet {
 //		doGet(request, response);
 //	}
 
-}
+

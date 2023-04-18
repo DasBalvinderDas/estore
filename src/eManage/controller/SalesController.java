@@ -30,14 +30,14 @@ public class SalesController extends HttpServlet {
 	String forward="";
 	
 	private SalesDAO dao;
-	private ProductDAO Productdao;   
+	private ProductDAO productdao;   
     /**
      * @see HttpServlet#HttpServlet()
      */
     public SalesController() {
         super();
         dao = new SalesDAO();
-        Productdao = new ProductDAO();
+        productdao = new ProductDAO();
         // TODO Auto-generated constructor stub
     }
 
@@ -50,7 +50,7 @@ public class SalesController extends HttpServlet {
 		 if (action.equalsIgnoreCase("SalesAdd")){
 			 forward = LIST;
 				try {            
-					request.setAttribute("products", Productdao.getAllProduct());
+					request.setAttribute("products", productdao.getAllProduct());
 					request.setAttribute("sales", dao.getAllSalesProduct());
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -75,7 +75,15 @@ public class SalesController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	
-		int productid = Integer.parseInt(request.getParameter("product_name"));
+		String productNameAndId = request.getParameter("product_name");
+		
+		
+		String[] split_string = productNameAndId.split("\\|");
+		String productName = split_string[0];
+		String strproductid = split_string[1];
+		
+		int productid = Integer.parseInt(strproductid);
+		
 		int productsellprice = 0;
 		try {
 			productsellprice = ProductDAO.getProductSellPriceById(productid);
@@ -85,6 +93,8 @@ public class SalesController extends HttpServlet {
 		}
 		
 		int quantity = Integer.parseInt(request.getParameter("product_quantity"));
+		System.out.println("quantity" + quantity);
+		System.out.println("productsellprice" + productsellprice);
 		int amount = quantity * productsellprice;
 		
 		Date myDate = new Date();
@@ -95,12 +105,20 @@ public class SalesController extends HttpServlet {
 		sales.setProduct_sell_price(productsellprice);
 		sales.setProduct_quantity(request.getParameter("product_quantity"));
         sales.setProduct_amount(amount);
+        sales.setStore_id(productdao.getStoreId());
         
 //        String transactionid = request.getParameter("transaction_id");
 //        if(transactionid == null || transactionid.isEmpty())
 //        {
 	        try {
 				dao.add(sales);
+				int currQuantity = productdao.getProductQuantity(productid);
+				
+				System.out.println("currQuantity" + currQuantity);
+				
+				System.out.println("final quantity" + (currQuantity - quantity));
+				
+				productdao.updateProductQuantity(productid, (currQuantity - quantity));
 			} catch (NoSuchAlgorithmException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -108,12 +126,12 @@ public class SalesController extends HttpServlet {
 //        }
 //        else{
 //            sales.setTransaction_id(Integer.parseInt(transactionid));
-            try {
-            	dao.add(sales);
-			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//            try {
+//            	dao.add(sales);
+//			} catch (NoSuchAlgorithmException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 //        }
         
 //		HttpSession session = request.getSession();
@@ -122,7 +140,7 @@ public class SalesController extends HttpServlet {
 //        forward = LIST;
 //		RequestDispatcher view = request.getRequestDispatcher(forward);
 		try {
-			request.setAttribute("products", Productdao.getAllProduct());
+			request.setAttribute("products", productdao.getAllProduct());
 			request.setAttribute("sales", dao.getAllSalesProduct());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

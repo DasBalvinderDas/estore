@@ -24,6 +24,7 @@ public class SalesDAO {
 	int product_sell_price;
 	static int product_amount;
     static int transaction_id;
+    int store_id;
     
     //add new product (register)
     public void add(SalesBean bean) throws NoSuchAlgorithmException{
@@ -33,17 +34,19 @@ public class SalesDAO {
     	product_name = bean.getProduct_name();
     	product_quantity = bean.getProduct_quantity();
     	product_sell_price = bean.getProduct_sell_price();
-    	product_amount = bean.getProduct_amount();  
+    	product_amount = bean.getProduct_amount(); 
+    	store_id = bean.getStore_id();
     	
     	try {
     		currentCon = ConnectionManager.getConnection();
-    		ps=currentCon.prepareStatement("insert into sales_product(transaction_id, transaction_date, product_name, product_quantity, product_sell_price, product_amount)values(?,?,?,?,?,?)");
+    		ps=currentCon.prepareStatement("insert into sales_product(transaction_id, transaction_date, product_name, product_quantity, product_sell_price, product_amount,store_id)values(?,?,?,?,?,?,?)");
     		ps.setInt(1,transaction_id);
     		ps.setString(2,transaction_date);
     		ps.setString(3,product_name); 
     		ps.setString(4,product_quantity);
     		ps.setInt(5,product_sell_price);
     		ps.setInt(6,product_amount);
+    		ps.setInt(7, store_id);
     		ps.execute();
     	
 //    		System.out.println("Your transaction date is " + transaction_date);
