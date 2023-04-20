@@ -23,6 +23,7 @@ import eManage.model.SaleInMonth;
 	
 	    static String  product_name, product_description, product_ori_price, product_sell_price, product_profit, product_quantity, product_supplier;
 	    static int product_id;
+	    int store_id;
 	    
 	    //add new product (register)
 	    public void add(ProductBean bean) throws NoSuchAlgorithmException{
@@ -33,11 +34,12 @@ import eManage.model.SaleInMonth;
 	    	product_sell_price = bean.getProduct_sell_price();
 	    	product_profit = bean.getProduct_profit();
 	    	product_quantity = bean.getProduct_quantity();
-	    	product_supplier = bean.getProduct_supplier();	   
+	    	product_supplier = bean.getProduct_supplier();
+	    	store_id = bean.getStore_id();
 	    	
 	    	try {
 	    		currentCon = ConnectionManager.getConnection();
-	    		ps=currentCon.prepareStatement("insert into products(product_name, product_description, product_ori_price, product_sell_price, product_profit, product_quantity, product_supplier)values(?,?,?,?,?,?,?)");
+	    		ps=currentCon.prepareStatement("insert into products(product_name, product_description, product_ori_price, product_sell_price, product_profit, product_quantity, product_supplier,store_id)values(?,?,?,?,?,?,?,?)");
 	    		ps.setString(1,product_name);
 	    		ps.setString(2,product_description);
 	    		ps.setString(3,product_ori_price); 
@@ -45,6 +47,7 @@ import eManage.model.SaleInMonth;
 	    		ps.setString(5,product_profit);
 	    		ps.setString(6,product_quantity);
 	    		ps.setString(7,product_supplier);
+	    		ps.setInt(8, store_id);
 	    		ps.execute();
 	    	
 	    		System.out.println("Your product name is " + product_name);

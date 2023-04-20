@@ -93,6 +93,7 @@ public class ProductController extends HttpServlet {
         product.setProduct_profit(request.getParameter("product_profit"));
         product.setProduct_quantity(request.getParameter("product_quantity"));
         product.setProduct_supplier(request.getParameter("product_supplier"));
+        product.setStore_id(dao.getStoreId());
         
 		String productid = request.getParameter("product_id");
         if(productid == null || productid.isEmpty())

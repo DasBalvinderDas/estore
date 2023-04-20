@@ -11,6 +11,7 @@ public class ProductBean {
 	private String product_quantity;
 	private String product_supplier;
 	public boolean valid;
+	private int store_id;
 	
 	public int getProduct_id() {
 		return product_id;
@@ -66,5 +67,11 @@ public class ProductBean {
 	public void setValid(boolean valid) {
 		this.valid = valid;
 	}
-
+	public int getStore_id() {
+		return store_id;
+	}
+	public void setStore_id(int store_id) {
+		this.store_id = store_id;
+	}
+	
 }
