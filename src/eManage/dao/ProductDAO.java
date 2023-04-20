@@ -278,12 +278,12 @@ import eManage.model.SaleInMonth;
 	    	String store_name = "";
 	        try {
 	        	currentCon = ConnectionManager.getConnection();
-	            ps=currentCon.prepareStatement("select store_name from stores");
+	            ps=currentCon.prepareStatement("select store_location from stores");
 	            
 	            ResultSet rs = ps.executeQuery();
 
 	            if (rs.next()) {
-	            	store_name =  rs.getString("store_name");
+	            	store_name =  rs.getString("store_location");
 	            }
 	        } catch (SQLException e) {
 	            e.printStackTrace();

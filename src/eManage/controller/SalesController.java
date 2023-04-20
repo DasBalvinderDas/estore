@@ -101,7 +101,7 @@ public class SalesController extends HttpServlet {
 		SalesBean sales = new SalesBean();
 //		sales.setTransaction_id(Integer.parseInt(request.getParameter("transaction_id")));
 		sales.setTransaction_date(new SimpleDateFormat("yyyy-MM-dd").format(myDate));
-		sales.setProduct_name(request.getParameter("product_name"));
+		sales.setProduct_name(productName);
 		sales.setProduct_sell_price(productsellprice);
 		sales.setProduct_quantity(request.getParameter("product_quantity"));
         sales.setProduct_amount(amount);
