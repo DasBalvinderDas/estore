@@ -72,7 +72,7 @@
           <div class="card mb-3">
             <div class="card-body">
               <h5>
-              Welcome,
+              E-Store Reports
               </h5>
             </div>
           </div> 
